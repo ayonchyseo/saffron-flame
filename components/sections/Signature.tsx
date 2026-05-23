@@ -1,16 +1,16 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { gsap, ScrollTrigger } from '@/lib/animations';
+import { gsap } from '@/lib/animations';
 import { EmberParticles } from '@/components/three/EmberParticles';
 import { SIGNATURE_PANELS } from '@/lib/data';
 import { useIsMobile } from '@/hooks/useMediaQuery';
 
 /**
  * SIGNATURE EXPERIENCE
- * GSAP horizontal-scroll: the section pins for its duration while panels glide
- * sideways. On mobile we fall back to a vertical stack so touch users don't
- * fight an unfamiliar gesture.
+ * GSAP horizontal-scroll: the section pins for its duration while panels
+ * glide sideways. On mobile we fall back to a vertical stack so touch
+ * users don't fight an unfamiliar gesture.
  */
 export function Signature() {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -18,14 +18,16 @@ export function Signature() {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    if (isMobile) return; // No pinning on touch — vertical CSS layout takes over.
+    if (isMobile) return;
     if (!wrapperRef.current || !trackRef.current) return;
 
     const ctx = gsap.context(() => {
       const panels = trackRef.current!.querySelectorAll('[data-panel]');
       const totalScroll = trackRef.current!.scrollWidth - window.innerWidth;
 
-      gsap.to(trackRef.current, {
+      // Save the horizontal scroll tween so we can hand it to each panel's
+      // ember fade as a containerAnimation reference.
+      const horizontalTween = gsap.to(trackRef.current, {
         x: -totalScroll,
         ease: 'none',
         scrollTrigger: {
@@ -39,7 +41,6 @@ export function Signature() {
         },
       });
 
-      // Each panel fades its decorative ember layer as it leaves view.
       panels.forEach((panel) => {
         const embers = panel.querySelector('[data-embers]');
         if (!embers) return;
@@ -51,7 +52,7 @@ export function Signature() {
             ease: 'sine.inOut',
             scrollTrigger: {
               trigger: panel,
-              containerAnimation: ScrollTrigger.getById('signature-x') ?? undefined,
+              containerAnimation: horizontalTween,
               start: 'left center',
               end: 'right center',
               scrub: true,
@@ -65,11 +66,7 @@ export function Signature() {
   }, [isMobile]);
 
   return (
-    <section
-      id="experience"
-      ref={wrapperRef}
-      className="relative bg-ink"
-    >
+    <section id="experience" ref={wrapperRef} className="relative bg-ink">
       <div className="container py-24 md:py-32">
         <p className="eyebrow">Chapter Three · The Experience</p>
         <h2 className="h-display text-fluid-lg mt-3 max-w-[16ch]">
@@ -104,12 +101,12 @@ function Panel({
   index: number;
   isMobile: boolean;
 }) {
-  // Distinct color washes per panel so the room feels its own.
+  // Distinct color washes per panel so each room feels its own.
   const accents = [
-    'from-[#5c1f1a]/40 via-[#0d0a08] to-[#0d0a08]',         // fire
-    'from-[#2a1d12]/60 via-[#0d0a08] to-[#0d0a08]',         // bar
-    'from-[#3a2718]/60 via-[#0d0a08] to-[#0d0a08]',         // private
-    'from-[#0d1a25]/50 via-[#0d0a08] to-[#0d0a08]',         // rooftop
+    'from-[#5c1f1a]/40 via-[#0d0a08] to-[#0d0a08]',
+    'from-[#2a1d12]/60 via-[#0d0a08] to-[#0d0a08]',
+    'from-[#3a2718]/60 via-[#0d0a08] to-[#0d0a08]',
+    'from-[#0d1a25]/50 via-[#0d0a08] to-[#0d0a08]',
   ];
 
   return (
@@ -122,14 +119,11 @@ function Panel({
           : 'w-screen h-[100svh] px-12',
       ].join(' ')}
     >
-      {/* Background wash */}
       <div className={`absolute inset-0 bg-gradient-to-br ${accents[index] ?? accents[0]}`} />
-      {/* Embers */}
       <div data-embers className="absolute inset-0">
         <EmberParticles count={isMobile ? 14 : 26} seed={index * 13 + 3} />
       </div>
 
-      {/* Content */}
       <div className="relative max-w-2xl text-center md:text-left">
         <p className="eyebrow">{panel.eyebrow}</p>
         <h3 className="h-display text-5xl md:text-7xl mt-3">{panel.title}</h3>
@@ -144,7 +138,6 @@ function Panel({
           </div>
         )}
 
-        {/* Decorative number */}
         <span aria-hidden className="hidden md:block absolute -left-32 -top-16 font-display text-[14rem] leading-none text-gold/5 select-none">
           0{index + 1}
         </span>
