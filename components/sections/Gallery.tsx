@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "@/hooks/useInView";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────
@@ -77,8 +78,7 @@ const DISHES: DishCard[] = [
 ];
 
 export function Gallery() {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-10%" });
+  const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.08 });
 
   return (
     <section ref={ref} className="relative py-28 md:py-40 overflow-hidden">
