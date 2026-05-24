@@ -22,27 +22,30 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
     const prefersReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (isTouch || prefersReduced) return;
 
-    const lenis = new Lenis({
-      duration: 1.15,
-      // Custom easing: gentle deceleration that feels physical
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.2,
-    });
+    try {
+      const lenis = new Lenis({
+        duration: 1.15,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        wheelMultiplier: 1.0,
+        touchMultiplier: 1.2,
+      });
 
-    const onScroll = () => ScrollTrigger.update();
-    lenis.on("scroll", onScroll);
+      const onScroll = () => ScrollTrigger.update();
+      lenis.on("scroll", onScroll);
 
-    const tickerCb = (time: number) => lenis.raf(time * 1000);
-    gsap.ticker.add(tickerCb);
-    gsap.ticker.lagSmoothing(0);
+      const tickerCb = (time: number) => lenis.raf(time * 1000);
+      gsap.ticker.add(tickerCb);
+      gsap.ticker.lagSmoothing(0);
 
-    return () => {
-      lenis.off("scroll", onScroll);
-      gsap.ticker.remove(tickerCb);
-      lenis.destroy();
-    };
+      return () => {
+        lenis.off("scroll", onScroll);
+        gsap.ticker.remove(tickerCb);
+        lenis.destroy();
+      };
+    } catch {
+      // Lenis failed to initialise (unusual environment) — fall back to native scroll
+    }
   }, []);
 
   return <>{children}</>;

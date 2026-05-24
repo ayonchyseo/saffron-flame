@@ -6,6 +6,7 @@ import {
   useIsMobile,
   usePrefersReducedMotion,
 } from "@/hooks/useMediaQuery";
+import { ThreeErrorBoundary } from "./ThreeErrorBoundary";
 
 interface CanvasShellProps extends Omit<CanvasProps, "children"> {
   children: React.ReactNode;
@@ -17,14 +18,16 @@ export function CanvasShell({ children, camera, ...rest }: CanvasShellProps) {
   const reduced = usePrefersReducedMotion();
 
   return (
-    <Canvas
-      dpr={isMobile ? [1, 1.5] : [1, 2]}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      camera={camera ?? { position: [0, 0.4, 3], fov: 36 }}
-      frameloop={reduced ? "demand" : "always"}
-      {...rest}
-    >
-      <Suspense fallback={null}>{children}</Suspense>
-    </Canvas>
+    <ThreeErrorBoundary>
+      <Canvas
+        dpr={isMobile ? [1, 1.5] : [1, 2]}
+        gl={{ antialias: !isMobile, alpha: true, powerPreference: "high-performance" }}
+        camera={camera ?? { position: [0, 0.4, 3], fov: 36 }}
+        frameloop={reduced ? "demand" : "always"}
+        {...rest}
+      >
+        <Suspense fallback={null}>{children}</Suspense>
+      </Canvas>
+    </ThreeErrorBoundary>
   );
 }
