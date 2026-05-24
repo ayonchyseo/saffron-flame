@@ -2,6 +2,7 @@
 
 import {
   Environment,
+  Lightformer,
   ContactShadows,
   Float,
 } from "@react-three/drei";
@@ -44,7 +45,13 @@ export function HeroScene() {
         color="#3a4a6a"
       />
       <pointLight position={[0, -1, 2]} intensity={0.6} color="#ff7a3d" />
-      <Environment preset="warehouse" />
+      {/* Procedural environment — no external HDR fetch, works offline */}
+      <Environment resolution={256} background={false}>
+        <Lightformer intensity={3} color="#ffb766" position={[6, 8, 6]} scale={[8, 8, 1]} />
+        <Lightformer intensity={1.2} color="#c89b3c" position={[-6, 4, -4]} scale={[6, 6, 1]} />
+        <Lightformer intensity={0.6} color="#3a4a6a" position={[0, -4, -6]} scale={[8, 4, 1]} />
+        <Lightformer intensity={0.8} color="#ff7a3d" position={[0, 2, 6]} scale={[4, 4, 1]} />
+      </Environment>
 
       <Float
         speed={reduced ? 0 : 1.2}
