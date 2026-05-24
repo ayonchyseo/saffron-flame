@@ -19,6 +19,10 @@ const Story = dynamic(
   () => import('@/components/sections/Story').then((m) => ({ default: m.Story })),
   { ssr: false },
 );
+const Gallery = dynamic(
+  () => import('@/components/sections/Gallery').then((m) => ({ default: m.Gallery })),
+  { ssr: false },
+);
 const Menu = dynamic(
   () => import('@/components/sections/Menu').then((m) => ({ default: m.Menu })),
   { ssr: false },
@@ -50,6 +54,7 @@ export default function Page() {
       <Navigation />
       <main className="relative">
         <Hero />
+        <Gallery />
         <Story />
         <Menu />
         <Signature />

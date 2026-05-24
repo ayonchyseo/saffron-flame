@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import {
   Environment,
+  Lightformer,
   ContactShadows,
   MeshTransmissionMaterial,
 } from "@react-three/drei";
@@ -37,7 +38,12 @@ export function MenuItem3D({ category, hovered }: MenuItem3DProps) {
         castShadow
       />
       <directionalLight position={[-3, 2, -2]} intensity={0.4} color="#5b6a8a" />
-      <Environment preset="warehouse" />
+      {/* Procedural environment — no external HDR fetch */}
+      <Environment resolution={128} background={false}>
+        <Lightformer intensity={2} color="#ffd57a" position={[4, 6, 4]} scale={[6, 6, 1]} />
+        <Lightformer intensity={0.8} color="#c89b3c" position={[-4, 2, -3]} scale={[5, 5, 1]} />
+        <Lightformer intensity={0.4} color="#5b6a8a" position={[0, -3, -4]} scale={[6, 3, 1]} />
+      </Environment>
 
       <group ref={groupRef}>
         {category === "steak" && <SteakGeometry />}
