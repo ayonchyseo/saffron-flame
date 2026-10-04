@@ -1,0 +1,13 @@
+import {chromium} from 'playwright-core';import {serve} from './serve.mjs';
+const s=await serve('.');const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome',args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--no-sandbox']});
+const p=await b.newPage({viewport:{width:1080,height:1920}});p.on('pageerror',e=>console.log('ERR',e.message));
+await p.goto('http://localhost:8123/src/index.html?scale=1');await p.waitForFunction('window.__ready');
+const run=async(name,js)=>{await p.evaluate(js);const r=await p.evaluate(()=>{const A=window.__A();const T=performance.now();A.tl.apply(5.0);const gl=A.renderer.getContext();const px=new Uint8Array(4);const t0=performance.now();A.renderer.setRenderTarget(A.post.sceneRT);A.renderer.clear();A.renderer.render(A.scene,A.camera);A.renderer.setRenderTarget(null);gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,px);return Math.round(performance.now()-t0)});console.log(name,r)};
+await run('baseline','0');await run('b2','0');
+await run('no clearcoat/sheen','(()=>{window.__A().scene.traverse(o=>{if(o.material)[].concat(o.material).forEach(m=>{if(m.clearcoat!==undefined){m.clearcoat=0;m.sheen=0;m.needsUpdate=true}})})})()');
+await run('again','0');
+await run('no bump','(()=>{window.__A().scene.traverse(o=>{if(o.material)[].concat(o.material).forEach(m=>{m.bumpMap=null;m.needsUpdate=true})})})()');
+await run('again','0');
+await run('no shadows','(()=>{const A=window.__A();A.renderer.shadowMap.enabled=false;A.scene.traverse(o=>{if(o.material)[].concat(o.material).forEach(m=>m.needsUpdate=true)})})()');
+await run('again','0');
+await b.close();s.close();
