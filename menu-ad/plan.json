@@ -1,0 +1,65 @@
+[
+  {
+    "t": [
+      0,
+      2
+    ],
+    "scene": "S1  Menu reveal",
+    "beats": "1–4",
+    "what": "Black → warm light slit sweeps leather edge · macro push-in · menu yaws in 3D · foil “TODAY’S SPECIAL” ignites at 1.0 s · logo at 1.5 s"
+  },
+  {
+    "t": [
+      2,
+      3.5
+    ],
+    "scene": "S2  Menu opens",
+    "beats": "5–7",
+    "what": "Camera lifts to 3/4 top view · cover hinges open with leather flex · printed photo revealed, peels up (3.0–3.5) and dissolves into the 3D dish"
+  },
+  {
+    "t": [
+      3.5,
+      6
+    ],
+    "scene": "S3  Hero food",
+    "beats": "8–12",
+    "what": "Dish fully formed (plate lands 3.5) · steam · orbit → low-angle macro → rack-focus to cheese/sauce"
+  },
+  {
+    "t": [
+      6,
+      8
+    ],
+    "scene": "S4  Ingredients",
+    "beats": "13–16",
+    "what": "Ingredients lift off the plate, spin, labelled · return to exact home pose at 7.5–8.0"
+  },
+  {
+    "t": [
+      8,
+      9.5
+    ],
+    "scene": "S5  Menu information",
+    "beats": "17–19",
+    "what": "Camera pulls back & up · name → description → price"
+  },
+  {
+    "t": [
+      9.5,
+      12
+    ],
+    "scene": "S6  Multiple dishes",
+    "beats": "20–24",
+    "what": "Lava cake rises from page (9.5) · fries slide through (10.5) · shake spins into place (11.0)"
+  },
+  {
+    "t": [
+      12,
+      14
+    ],
+    "scene": "FINAL",
+    "beats": "25–28",
+    "what": "Dishes collapse into the printed photo · menu closes (12.25–12.95) · camera cranes up · tagline · ORDER NOW"
+  }
+]

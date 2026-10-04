@@ -1,0 +1,86 @@
+{
+  "bpm": 120,
+  "beat_seconds": 0.5,
+  "cues": [
+    {
+      "t": 0,
+      "cue": "cinematic bass hit / sub rise start"
+    },
+    {
+      "t": 1,
+      "cue": "foil ignite — shimmer riser peak"
+    },
+    {
+      "t": 1.5,
+      "cue": "logo reveal — soft impact"
+    },
+    {
+      "t": 2,
+      "cue": "menu-opening sound (leather creak + page rustle)"
+    },
+    {
+      "t": 2.6,
+      "cue": "whoosh (cover mid-swing)"
+    },
+    {
+      "t": 3,
+      "cue": "photo peel — rising swell"
+    },
+    {
+      "t": 3.5,
+      "cue": "plate placement + bass hit"
+    },
+    {
+      "t": 3.6,
+      "cue": "sizzle loop start"
+    },
+    {
+      "t": 6,
+      "cue": "ingredient lift — whoosh + impact"
+    },
+    {
+      "t": 6.5,
+      "cue": "sparkle tick ×5 (labels)"
+    },
+    {
+      "t": 7.5,
+      "cue": "ingredients return — reverse whoosh"
+    },
+    {
+      "t": 8,
+      "cue": "impact (settle)"
+    },
+    {
+      "t": 8.5,
+      "cue": "price hit"
+    },
+    {
+      "t": 9.5,
+      "cue": "cake rise — soft thump"
+    },
+    {
+      "t": 10.5,
+      "cue": "fries slide — whoosh"
+    },
+    {
+      "t": 11,
+      "cue": "shake rotate-in — whoosh + tick"
+    },
+    {
+      "t": 12,
+      "cue": "collapse — suction whoosh"
+    },
+    {
+      "t": 12.5,
+      "cue": "menu close — leather thud"
+    },
+    {
+      "t": 13,
+      "cue": "FINAL bass drop"
+    },
+    {
+      "t": 13.5,
+      "cue": "CTA ping"
+    }
+  ]
+}
